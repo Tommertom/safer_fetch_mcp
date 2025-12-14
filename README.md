@@ -35,16 +35,16 @@ use [`uvx`](https://docs.astral.sh/uv/guides/tools/) to directly run *mcp-server
 
 ### Using PIP
 
-Alternatively you can install `mcp-server-fetch` via pip:
+Alternatively you can install `mcp-server-fetch-tom` via pip:
 
 ```
-pip install mcp-server-fetch
+pip install mcp-server-fetch-tom
 ```
 
 After installation, you can run it as a script using:
 
 ```
-python -m mcp_server_fetch
+mcp-server-fetch-tom
 ```
 
 ## Configuration
@@ -61,7 +61,7 @@ Add to your Claude settings:
   "mcpServers": {
     "fetch": {
       "command": "uvx",
-      "args": ["mcp-server-fetch"]
+      "args": ["mcp-server-fetch-tom"]
     }
   }
 }
@@ -90,8 +90,7 @@ Add to your Claude settings:
 {
   "mcpServers": {
     "fetch": {
-      "command": "python",
-      "args": ["-m", "mcp_server_fetch"]
+      "command": "mcp-server-fetch-tom"
     }
   }
 }
@@ -102,7 +101,7 @@ Add to your Claude settings:
 
 For quick installation, use one of the one-click install buttons below...
 
-[![Install with UV in VS Code](https://img.shields.io/badge/VS_Code-UV-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22mcp-server-fetch%22%5D%7D) [![Install with UV in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-UV-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22mcp-server-fetch%22%5D%7D&quality=insiders)
+[![Install with UV in VS Code](https://img.shields.io/badge/VS_Code-UV-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22mcp-server-fetch-tom%22%5D%7D) [![Install with UV in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-UV-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22mcp-server-fetch-tom%22%5D%7D&quality=insiders)
 
 [![Install with Docker in VS Code](https://img.shields.io/badge/VS_Code-Docker-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22--rm%22%2C%22mcp%2Ffetch%22%5D%7D) [![Install with Docker in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-Docker-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22--rm%22%2C%22mcp%2Ffetch%22%5D%7D&quality=insiders)
 
@@ -121,7 +120,7 @@ Optionally, you can add it to a file called `.vscode/mcp.json` in your workspace
     "servers": {
       "fetch": {
         "command": "uvx",
-        "args": ["mcp-server-fetch"]
+        "args": ["mcp-server-fetch-tom"]
       }
     }
   }
@@ -182,7 +181,7 @@ If you're experiencing timeout issues on Windows, you may need to set the `PYTHO
   "mcpServers": {
     "fetch": {
       "command": "uvx",
-      "args": ["mcp-server-fetch"],
+      "args": ["mcp-server-fetch-tom"],
       "env": {
         "PYTHONIOENCODING": "utf-8"
       }
@@ -199,8 +198,7 @@ If you're experiencing timeout issues on Windows, you may need to set the `PYTHO
 {
   "mcpServers": {
     "fetch": {
-      "command": "python",
-      "args": ["-m", "mcp_server_fetch"],
+      "command": "mcp-server-fetch-tom",
       "env": {
         "PYTHONIOENCODING": "utf-8"
       }
@@ -217,14 +215,14 @@ This addresses character encoding issues that can cause the server to timeout on
 You can use the MCP inspector to debug the server. For uvx installations:
 
 ```
-npx @modelcontextprotocol/inspector uvx mcp-server-fetch
+npx @modelcontextprotocol/inspector uvx mcp-server-fetch-tom
 ```
 
 Or if you've installed the package in a specific directory or are developing on it:
 
 ```
-cd path/to/servers/src/fetch
-npx @modelcontextprotocol/inspector uv run mcp-server-fetch
+cd path/to/fetch_mcp
+npx @modelcontextprotocol/inspector uv run mcp-server-fetch-tom
 ```
 
 ## Contributing
