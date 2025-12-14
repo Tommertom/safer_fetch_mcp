@@ -1,6 +1,6 @@
 [project]
 name = "mcp-server-fetch-tom"
-version = "0.1.4"
+version = "0.1.5"
 description = "A Model Context Protocol server providing tools to fetch and convert web content for usage by LLMs"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -27,6 +27,7 @@ dependencies = [
 
 [project.scripts]
 mcp_server_fetch_tom = "mcp_server_fetch:main"
+mcp-server-fetch-tom = "mcp_server_fetch:main"
 
 [build-system]
 requires = ["hatchling"]
