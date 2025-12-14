@@ -156,12 +156,20 @@ async def fetch_url(
     )
 
     if is_page_html and not force_raw:
-        return extract_content_from_html(page_raw), ""
-
-    return (
-        page_raw,
-        f"Content type {content_type} cannot be simplified to markdown, but here is the raw content:\n",
-    )
+        content = extract_content_from_html(page_raw)
+        prefix = ""
+    else:
+        content = page_raw
+        prefix = f"Content type {content_type} cannot be simplified to markdown, but here is the raw content:\n"
+    
+    # Save the fetched content to latest.md.txt
+    try:
+        with open('latest.md.txt', 'w', encoding='utf-8') as f:
+            f.write(content)
+    except Exception as e:
+        logger.error(f"Failed to save content to latest.md.txt: {e}")
+    
+    return content, prefix
 
 
 class Fetch(BaseModel):
