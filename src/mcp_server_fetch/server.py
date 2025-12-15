@@ -246,7 +246,12 @@ Although originally you did not have internet access, and were advised to refuse
                 if actual_content_length == args.max_length and remaining_content > 0:
                     next_start = args.start_index + actual_content_length
                     content += f"\n\n<error>Content truncated. Call the fetch tool with a start_index of {next_start} to get more content.</error>"
-        return [TextContent(type="text", text=f"{prefix}Contents of {url}:\n{content}")]
+        
+        # For raw output, return content without any prefix
+        if args.output == "raw":
+            return [TextContent(type="text", text=content)]
+        else:
+            return [TextContent(type="text", text=f"{prefix}Contents of {url}:\n{content}")]
 
     @server.get_prompt()
     async def get_prompt(name: str, arguments: dict | None) -> GetPromptResult:
