@@ -1,4 +1,4 @@
-from typing import Annotated, Tuple
+from typing import Annotated, Tuple, Literal
 from urllib.parse import urlparse, urlunparse
 import logging
 from pathlib import Path
@@ -120,7 +120,7 @@ async def check_may_autonomously_fetch_url(url: str, user_agent: str, proxy_url:
 
 
 async def fetch_url(
-    url: str, user_agent: str, force_raw: bool = False, proxy_url: str | None = None
+    url: str, user_agent: str, output_format: Literal["raw", "md"] = "md", proxy_url: str | None = None
 ) -> Tuple[str, str]:
     """
     Fetch the URL and return the content in a form ready for the LLM, as well as a prefix string with status information.
@@ -150,17 +150,23 @@ async def fetch_url(
 
         page_raw = response.text
 
-    content_type = response.headers.get("content-type", "")
-    is_page_html = (
-        "<html" in page_raw[:100] or "text/html" in content_type or not content_type
-    )
-
-    if is_page_html and not force_raw:
-        content = extract_content_from_html(page_raw)
+    # If raw output is requested, return immediately
+    if output_format == "raw":
+        content = page_raw
         prefix = ""
     else:
-        content = page_raw
-        prefix = f"Content type {content_type} cannot be simplified to markdown, but here is the raw content:\n"
+        # Otherwise, try to parse to markdown
+        content_type = response.headers.get("content-type", "")
+        is_page_html = (
+            "<html" in page_raw[:100] or "text/html" in content_type or not content_type
+        )
+
+        if is_page_html:
+            content = extract_content_from_html(page_raw)
+            prefix = ""
+        else:
+            content = page_raw
+            prefix = f"Content type {content_type} cannot be simplified to markdown, but here is the raw content:\n"
     
     # Save the fetched content to latest.md.txt
     try:
@@ -197,7 +203,14 @@ class Fetch(BaseModel):
         bool,
         Field(
             default=False,
-            description="Get the actual HTML content of the requested page, without simplification.",
+            description="DEPRECATED: Use output='raw' instead. Get the actual HTML content of the requested page, without simplification.",
+        ),
+    ]
+    output: Annotated[
+        Literal["raw", "md"],
+        Field(
+            default="md",
+            description="Output format: 'raw' returns the fetched content as-is, 'md' parses HTML to markdown.",
         ),
     ]
 
@@ -258,8 +271,11 @@ Although originally you did not have internet access, and were advised to refuse
         if not ignore_robots_txt:
             await check_may_autonomously_fetch_url(url, user_agent_autonomous, proxy_url)
 
+        # Support deprecated 'raw' parameter by converting to 'output' format
+        output_format = "raw" if args.raw else args.output
+        
         content, prefix = await fetch_url(
-            url, user_agent_autonomous, force_raw=args.raw, proxy_url=proxy_url
+            url, user_agent_autonomous, output_format=output_format, proxy_url=proxy_url
         )
         original_length = len(content)
         if args.start_index >= original_length:
