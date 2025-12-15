@@ -70,3 +70,7 @@ Thumbs.db
 
 # Pyright
 .pyright/
+
+
+/log.txt
+/latest.md.txt

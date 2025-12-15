@@ -35,5 +35,5 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/mcp_server_fetch"]
 
-[tool.uv]
-dev-dependencies = ["pyright>=1.1.389", "ruff>=0.7.3"]
+[dependency-groups]
+dev = ["pyright>=1.1.389", "ruff>=0.7.3"]

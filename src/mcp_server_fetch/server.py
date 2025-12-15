@@ -24,13 +24,17 @@ from pydantic import BaseModel, Field, AnyUrl
 DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 
 # Set up logging to log.txt
+# Use force=True to ensure no other handlers write to stdout/stderr
 logging.basicConfig(
     filename='log.txt',
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+    datefmt='%Y-%m-%d %H:%M:%S',
+    force=True
 )
 logger = logging.getLogger(__name__)
+# Ensure no propagation to root logger
+logger.propagate = False
 
 
 def extract_content_from_html(html: str) -> str:
@@ -105,10 +109,10 @@ async def fetch_url(
     
     # Save the fetched content to latest.md.txt
     try:
-        with open('latest.md.txt', 'w', encoding='utf-8') as f:
+        with open('latest.txt', 'w', encoding='utf-8') as f:
             f.write(content)
     except Exception as e:
-        logger.error(f"Failed to save content to latest.md.txt: {e}")
+        logger.error(f"Failed to save content to latest.txt: {e}")
     
     return content, prefix
 
