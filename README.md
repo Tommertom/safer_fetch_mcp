@@ -1,7 +1,5 @@
 # Safer Fetch MCP Server
 
-<!-- mcp-name: io.github.modelcontextprotocol/server-fetch -->
-
 A Model Context Protocol server that provides web content fetching capabilities **with built-in prompt injection safeguards**. This server enables LLMs to retrieve and process content from web pages, converting HTML to markdown for easier consumption, while protecting against malicious content that could manipulate the LLM.
 
 ## ⚠️ Disclaimer
