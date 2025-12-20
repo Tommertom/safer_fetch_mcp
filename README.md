@@ -1,8 +1,44 @@
-# Fetch MCP Server
+# Safer Fetch MCP Server
 
 <!-- mcp-name: io.github.modelcontextprotocol/server-fetch -->
 
-A Model Context Protocol server that provides web content fetching capabilities. This server enables LLMs to retrieve and process content from web pages, converting HTML to markdown for easier consumption.
+A Model Context Protocol server that provides web content fetching capabilities **with built-in prompt injection safeguards**. This server enables LLMs to retrieve and process content from web pages, converting HTML to markdown for easier consumption, while protecting against malicious content that could manipulate the LLM.
+
+## ⚠️ Disclaimer
+
+**This software is provided "as is" without warranty of any kind.** While this server implements prompt injection detection and mitigation measures, **no security solution is 100% effective**. The safeguards implemented are designed to reduce risk but cannot guarantee complete protection against all prompt injection attacks. 
+
+Users should:
+- Exercise caution when fetching content from untrusted sources
+- Review fetched content before acting on it in sensitive contexts
+- Understand that determined attackers may find ways to bypass detection
+- Not rely solely on these safeguards for security-critical applications
+
+The maintainers are not responsible for any damages or security incidents resulting from the use of this software.
+
+## Security Features
+
+This server includes prompt injection safeguards to protect LLMs from malicious web content:
+
+### 1. Content Boundary Wrapping
+All fetched content is wrapped in security boundary tags with a **random boundary ID** (to prevent escape attacks). The wrapper includes:
+- Clear instructions that content should be treated as **DATA ONLY**, not as instructions
+- Critical security rules for the LLM to follow
+- Source URL attribution
+
+### 2. Prompt Injection Pattern Detection
+Content is scanned for 20+ suspicious patterns including:
+- **Instruction overrides**: "ignore previous instructions", "disregard prior prompts"
+- **Role manipulation**: "you are now", "act as", "pretend to be"  
+- **System prompt attacks**: "new system prompt", "override instructions"
+- **Jailbreak attempts**: "developer mode", "DAN mode", "bypass restrictions"
+- **Output manipulation**: "do not mention", "keep this secret"
+- **Encoded instructions**: Base64 patterns, "decode and execute"
+
+When suspicious patterns are detected:
+- A `SECURITY_WARNING` is added to the output
+- The LLM is instructed to spawn a subagent for independent review
+- If confirmed malicious, the LLM should HALT and inform the user
 
 > [!CAUTION]
 > This server can access local/internal IP addresses and may represent a security risk. Exercise caution when using this MCP server to ensure this does not expose any sensitive data.
@@ -236,7 +272,15 @@ https://github.com/modelcontextprotocol/servers
 
 Pull requests are welcome! Feel free to contribute new ideas, bug fixes, or enhancements to make mcp-server-fetch even more powerful and useful.
 
+## Security Considerations
+
+While this server implements prompt injection safeguards, security is a shared responsibility:
+
+1. **Defense in depth**: These safeguards are one layer of protection; combine with other security measures
+2. **Regular updates**: Keep the server updated to benefit from new pattern detection rules
+3. **Report vulnerabilities**: If you discover a bypass or vulnerability, please report it responsibly
+4. **False positives**: The pattern detection may flag legitimate content; review warnings in context
+
 ## License
 
 mcp-server-fetch is licensed under the MIT License. This means you are free to use, modify, and distribute the software, subject to the terms and conditions of the MIT License. For more details, please see the LICENSE file in the project repository.
-# fetch_mcp
