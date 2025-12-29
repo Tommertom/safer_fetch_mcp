@@ -4,6 +4,8 @@ A Model Context Protocol server that provides web content fetching capabilities 
 
 ## 🚀 Quick Start
 
+### Installing the Server
+
 Run the MCP server using [uvx](https://docs.astral.sh/uv/guides/tools/):
 
 ```bash
@@ -11,6 +13,103 @@ uvx --refresh mcp-server-fetch-tom
 ```
 
 The `--refresh` flag ensures you always get the latest version.
+
+### Configuring in Your AI IDE
+
+Choose your IDE and add the configuration to enable the fetch MCP server:
+
+#### Claude Desktop
+
+Edit your Claude Desktop configuration file:
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+- **Linux**: `~/.config/Claude/claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "fetch": {
+      "command": "uvx",
+      "args": ["--refresh", "mcp-server-fetch-tom"]
+    }
+  }
+}
+```
+
+#### VS Code (Cline / Roo Cline)
+
+Add to your VS Code settings (`.vscode/mcp.json` in workspace or User Settings JSON):
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "fetch": {
+        "command": "uvx",
+        "args": ["--refresh", "mcp-server-fetch-tom"]
+      }
+    }
+  }
+}
+```
+
+Or use the one-click install buttons:
+
+[![Install with UV in VS Code](https://img.shields.io/badge/VS_Code-UV-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22--refresh%22%2C%22mcp-server-fetch-tom%22%5D%7D) [![Install with UV in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-UV-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22--refresh%22%2C%22mcp-server-fetch-tom%22%5D%7D&quality=insiders)
+
+#### Cursor
+
+Add to Cursor settings:
+1. Open Cursor Settings (`Cmd/Ctrl + ,`)
+2. Search for "MCP"
+3. Add server configuration, or edit `.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "fetch": {
+      "command": "uvx",
+      "args": ["--refresh", "mcp-server-fetch-tom"]
+    }
+  }
+}
+```
+
+#### Continue (VS Code Extension)
+
+Edit `~/.continue/config.json`:
+
+```json
+{
+  "mcpServers": {
+    "fetch": {
+      "command": "uvx",
+      "args": ["--refresh", "mcp-server-fetch-tom"]
+    }
+  }
+}
+```
+
+#### Goose AI
+
+Edit `~/.config/goose/profiles.yaml`:
+
+```yaml
+default:
+  provider: openai
+  processor: gpt-4
+  accelerator: gpt-4o-mini
+  moderator: passive
+  toolkits:
+    - developer
+    - mcp
+  mcp_servers:
+    fetch:
+      command: uvx
+      args:
+        - --refresh
+        - mcp-server-fetch-tom
+```
 
 ## ⚠️ Disclaimer
 
@@ -82,29 +181,14 @@ uvx --refresh mcp-server-fetch-tom
 ```
 
 
-## Configuration
+## Advanced Configuration
 
-### Configure for Claude.app
+### Alternative Installation Methods
 
-Add to your Claude settings:
-
-<details>
-<summary>Using uvx</summary>
-
-```json
-{
-  "mcpServers": {
-    "fetch": {
-      "command": "uvx",
-      "args": ["--refresh", "mcp-server-fetch-tom"]
-    }
-  }
-}
-```
-</details>
+The examples above use `uvx` for simplicity. You can also use:
 
 <details>
-<summary>Using docker</summary>
+<summary>Docker</summary>
 
 ```json
 {
@@ -119,61 +203,16 @@ Add to your Claude settings:
 </details>
 
 <details>
-<summary>Using pip installation</summary>
+<summary>pip installation</summary>
 
+First install: `pip install mcp-server-fetch-tom`
+
+Then configure:
 ```json
 {
   "mcpServers": {
     "fetch": {
       "command": "mcp-server-fetch-tom"
-    }
-  }
-}
-```
-</details>
-
-### Configure for VS Code
-
-For quick installation, use one of the one-click install buttons below...
-
-[![Install with UV in VS Code](https://img.shields.io/badge/VS_Code-UV-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22--refresh%22%2C%22mcp-server-fetch-tom%22%5D%7D) [![Install with UV in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-UV-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22--refresh%22%2C%22mcp-server-fetch-tom%22%5D%7D&quality=insiders)
-
-[![Install with Docker in VS Code](https://img.shields.io/badge/VS_Code-Docker-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22--rm%22%2C%22mcp%2Ffetch%22%5D%7D) [![Install with Docker in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-Docker-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=fetch&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22--rm%22%2C%22mcp%2Ffetch%22%5D%7D&quality=insiders)
-
-For manual installation, add the following JSON block to your User Settings (JSON) file in VS Code. You can do this by pressing `Ctrl + Shift + P` and typing `Preferences: Open User Settings (JSON)`.
-
-Optionally, you can add it to a file called `.vscode/mcp.json` in your workspace. This will allow you to share the configuration with others.
-
-> Note that the `mcp` key is needed when using the `mcp.json` file.
-
-<details>
-<summary>Using uvx</summary>
-
-```json
-{
-  "mcp": {
-    "servers": {
-      "fetch": {
-        "command": "uvx",
-        "args": ["--refresh", "mcp-server-fetch-tom"]
-      }
-    }
-  }
-}
-```
-</details>
-
-<details>
-<summary>Using Docker</summary>
-
-```json
-{
-  "mcp": {
-    "servers": {
-      "fetch": {
-        "command": "docker",
-        "args": ["run", "-i", "--rm", "mcp/fetch"]
-      }
     }
   }
 }
