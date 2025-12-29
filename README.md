@@ -299,6 +299,9 @@ cd path/to/fetch_mcp
 npx @modelcontextprotocol/inspector uv run mcp-server-fetch-tom
 ```
 
+## Building and deploying
+`uvx --from build pyproject-build` and `uvx twine dist/*`
+
 ## Contributing
 
 We encourage contributions to help expand and improve mcp-server-fetch. Whether you want to add new tools, enhance existing functionality, or improve documentation, your input is valuable.

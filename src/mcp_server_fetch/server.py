@@ -29,13 +29,18 @@ DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.
 
 # Set up logging to log.txt
 # Use force=True to ensure no other handlers write to stdout/stderr
-logging.basicConfig(
-    filename="log.txt",
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-    force=True,
-)
+try:
+    logging.basicConfig(
+        filename="log.txt",
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+        force=True,
+    )
+except Exception:
+    # Ignore failures when attempting to write log.txt (e.g., permission errors)
+    pass
+
 logger = logging.getLogger(__name__)
 # Ensure no propagation to root logger
 logger.propagate = False
@@ -269,8 +274,9 @@ async def fetch_url(
     try:
         with open("latest.txt", "w", encoding="utf-8") as f:
             f.write(content)
-    except Exception as e:
-        logger.error(f"Failed to save content to latest.txt: {e}")
+    except Exception:
+        # Ignore failures when attempting to write latest.txt (e.g., permission errors)
+        pass
 
     return content, prefix
 
