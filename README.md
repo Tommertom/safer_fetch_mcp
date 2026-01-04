@@ -2,6 +2,10 @@
 
 A Model Context Protocol server that provides web content fetching capabilities **with built-in prompt injection safeguards**. This server enables LLMs to retrieve and process content from web pages, converting HTML to markdown for easier consumption, while protecting against malicious content that could manipulate the LLM.
 
+## Acknowledgements
+
+This project is based on Anthropic's Fetch MCP server implementation and incorporates prompt injection safeguard code/patterns from Goose.
+
 ## 🚀 Quick Start
 
 ### Installing the Server
@@ -294,8 +298,33 @@ cd path/to/fetch_mcp
 npx @modelcontextprotocol/inspector uv run mcp-server-fetch-tom
 ```
 
-## Building and deploying
-`uvx --from build pyproject-build` and `uvx twine dist/*`
+## Building and Publishing
+
+For maintainers: See the [Publishing Guide](docs/PUBLISHING.md) for detailed instructions on building and publishing to PyPI.
+
+**Quick Reference:**
+```bash
+# Build the package
+uvx --from build pyproject-build --installer uv
+
+# Check the build
+uvx twine check dist/*
+
+# Upload to PyPI
+uvx twine upload dist/*
+```
+
+Or use the Makefile:
+```bash
+make build   # Build package
+make check   # Verify package
+make upload  # Upload to PyPI
+```
+
+For more details, see:
+- [Full Publishing Guide](docs/PUBLISHING.md) - Comprehensive documentation
+- [Quick Start Guide](docs/QUICKSTART_PUBLISHING.md) - TL;DR version
+- [Makefile](Makefile) - Automated commands
 
 ## Contributing
 
