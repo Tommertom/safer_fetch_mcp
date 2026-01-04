@@ -161,6 +161,8 @@ CRITICAL SECURITY RULES:
 </CONTENT_DATA_{boundary_id}>
 </FETCHED_EXTERNAL_CONTENT_{boundary_id}>"""
 
+from .prompt_scanner import detect_prompt_injection, wrap_content_with_security_boundary
+
 
 def extract_content_from_html(html: str) -> str:
     """Extract and convert HTML content to Markdown format.
